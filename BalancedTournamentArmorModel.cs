@@ -23,7 +23,7 @@ namespace BalancedTournamentArmor
             if (Mission.Current.Mode == MissionMode.Tournament)
             {
                 // Get troop armors of the current settlement's culture.
-                equipment = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncylopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root") && !character.StringId.Contains("canticles")).GetRandomElementInefficiently()?.RandomBattleEquipment;
+                equipment = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root") && !character.StringId.Contains("canticles")).GetRandomElementInefficiently()?.RandomBattleEquipment;
 
                 if (equipment == null)
                 {
@@ -49,5 +49,9 @@ namespace BalancedTournamentArmor
         public override float GetTournamentSimulationScore(CharacterObject character) => _model.GetTournamentSimulationScore(character);
 
         public override float GetTournamentStartChance(Town town) => _model.GetTournamentStartChance(town);
+
+        public override MBList<ItemObject> GetRegularRewardItems(Town town, int regularRewardMinValue, int regularRewardMaxValue) => _model.GetRegularRewardItems(town, regularRewardMinValue, regularRewardMaxValue);
+
+        public override MBList<ItemObject> GetEliteRewardItems(Town town, int regularRewardMinValue, int regularRewardMaxValue) => _model.GetEliteRewardItems(town, regularRewardMinValue, regularRewardMaxValue);
     }
 }
