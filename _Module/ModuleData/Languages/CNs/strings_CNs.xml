@@ -4,9 +4,11 @@
     <tag language="简体中文" />
   </tags>
   <strings>
-    <string id="BTAjOwRmll" text="部队等级" />
-    <string id="BTAR01o5du" text="大赛参与者所穿盔甲的部队等级。默认为1。" />
-    <string id="BTAuNk1YN6" text="盔甲" />
-    <string id="BTATcr8DlA" text="无法更改{name}的盔甲！" />
+    <string id="BTA01" text="无法更改{name}的盔甲！" />
+    <string id="BTA02" text="更改盔甲" />
+    <string id="BTA03" text="切换更改盔甲" />
+    <string id="BTA04" text="更改大赛参与者的盔甲。默认启用。" />
+    <string id="BTA05" text="部队等级" />
+    <string id="BTA06" text="大赛参与者所穿盔甲的部队等级。默认为1。" />
   </strings>
 </base>

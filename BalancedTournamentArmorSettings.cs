@@ -14,8 +14,12 @@ namespace BalancedTournamentArmor
 
         public override string FormatType => "json2";
 
-        [SettingPropertyInteger("{=BTAjOwRmll}Troop Tier", 1, 6, "0", Order = 0, RequireRestart = false, HintText = "{=BTAR01o5du}Troop tier for armor worn by tournament participants. Default is 1.")]
-        [SettingPropertyGroup("{=BTAuNk1YN6}Armor", GroupOrder = 0)]
+        [SettingPropertyBool("{=BTA03}Toggle Change Armor", Order = 0, RequireRestart = false, HintText = "{=BTA04}Change armor of tournament participants. Enabled by default.", IsToggle = true)]
+        [SettingPropertyGroup("{=BTA02}Change Armor", GroupOrder = 0)]
+        public bool ShouldChangeArmor { get; set; } = true;
+
+        [SettingPropertyInteger("{=BTA05}Troop Tier", 1, 7, "0", Order = 1, RequireRestart = false, HintText = "{=BTA06}Troop tier for armor worn by tournament participants. Default is 1.")]
+        [SettingPropertyGroup("{=BTA02}Change Armor", GroupOrder = 0)]
         public int TroopTier { get; set; } = 1;
     }
 }

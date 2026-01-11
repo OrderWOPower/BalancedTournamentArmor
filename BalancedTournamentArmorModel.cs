@@ -20,14 +20,14 @@ namespace BalancedTournamentArmor
         {
             Equipment equipment = null;
 
-            if (Mission.Current.Mode == MissionMode.Tournament)
+            if (Mission.Current.Mode == MissionMode.Tournament && BalancedTournamentArmorSettings.Instance.ShouldChangeArmor)
             {
                 // Get troop armors of the current settlement's culture.
-                equipment = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).GetRandomElementInefficiently()?.RandomBattleEquipment;
+                equipment = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsNotTransferableInPartyScreen && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).GetRandomElementInefficiently()?.RandomBattleEquipment;
 
                 if (equipment == null)
                 {
-                    InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BTATcr8DlA}Unable to change armor of {name}!", new Dictionary<string, object>() { { "name", participant.Name } }).ToString()));
+                    InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BTA01}Unable to change armor of {name}!", new Dictionary<string, object>() { { "name", participant.Name } }).ToString()));
                 }
             }
 

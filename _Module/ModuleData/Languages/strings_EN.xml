@@ -4,9 +4,11 @@
     <tag language="English" />
   </tags>
   <strings>
-    <string id="BTAjOwRmll" text="Troop Tier" />
-    <string id="BTAR01o5du" text="Troop tier for armor worn by tournament participants. Default is 1." />
-    <string id="BTAuNk1YN6" text="Armor" />
-    <string id="BTATcr8DlA" text="Unable to change armor of {name}!" />
+    <string id="BTA01" text="Unable to change armor of {name}!" />
+    <string id="BTA02" text="Change Armor" />
+    <string id="BTA03" text="Toggle Change Armor" />
+    <string id="BTA04" text="Change armor of tournament participants. Enabled by default." />
+    <string id="BTA05" text="Troop Tier" />
+    <string id="BTA06" text="Troop tier for armor worn by tournament participants. Default is 1." />
   </strings>
 </base>
