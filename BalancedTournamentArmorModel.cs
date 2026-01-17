@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ComponentInterfaces;
 using TaleWorlds.CampaignSystem.Settlements;
@@ -18,20 +19,23 @@ namespace BalancedTournamentArmor
 
         public override Equipment GetParticipantArmor(CharacterObject participant)
         {
-            Equipment equipment = null;
+            Equipment participantArmor = null;
 
             if (Mission.Current.Mode == MissionMode.Tournament && BalancedTournamentArmorSettings.Instance.ShouldChangeArmor)
             {
                 // Get troop armors of the current settlement's culture.
-                equipment = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsNotTransferableInPartyScreen && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).GetRandomElementInefficiently()?.RandomBattleEquipment;
+                List<Equipment> equipments = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).Select(character => character?.RandomBattleEquipment).Where(equipment => equipment != null).OrderBy(equipment => GetTotalArmorSum(equipment)).ToList();
 
-                if (equipment == null)
+                equipments.RemoveAll(equipment => GetTotalArmorSum(equipment) >= GetTotalArmorSum(equipments.First()) * 2);
+                participantArmor = equipments.GetRandomElement();
+
+                if (participantArmor == null)
                 {
                     InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BTA01}Unable to change armor of {name}!", new Dictionary<string, object>() { { "name", participant.Name } }).ToString()));
                 }
             }
 
-            return equipment ?? _model.GetParticipantArmor(participant);
+            return participantArmor ?? _model.GetParticipantArmor(participant);
         }
 
         public override TournamentGame CreateTournament(Town town) => _model.CreateTournament(town);
@@ -53,5 +57,7 @@ namespace BalancedTournamentArmor
         public override MBList<ItemObject> GetRegularRewardItems(Town town, int regularRewardMinValue, int regularRewardMaxValue) => _model.GetRegularRewardItems(town, regularRewardMinValue, regularRewardMaxValue);
 
         public override MBList<ItemObject> GetEliteRewardItems(Town town, int regularRewardMinValue, int regularRewardMaxValue) => _model.GetEliteRewardItems(town, regularRewardMinValue, regularRewardMaxValue);
+
+        private float GetTotalArmorSum(Equipment equipment) => equipment.GetHeadArmorSum() + equipment.GetHumanBodyArmorSum() + equipment.GetLegArmorSum() + equipment.GetArmArmorSum();
     }
 }
