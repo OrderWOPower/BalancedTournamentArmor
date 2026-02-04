@@ -10,5 +10,7 @@
     <string id="BTA04" text="更改大赛参与者的盔甲。默认启用。" />
     <string id="BTA05" text="部队等级" />
     <string id="BTA06" text="大赛参与者所穿盔甲的部队等级。默认为1。" />
+    <string id="BTA07" text="穿自己文化的盔甲" />
+    <string id="BTA08" text="大赛参与者会穿自己文化的盔甲，而非当前定居点文化的盔甲。默认禁用。" />
   </strings>
 </base>

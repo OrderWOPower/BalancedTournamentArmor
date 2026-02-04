@@ -10,5 +10,7 @@
     <string id="BTA04" text="Change armor of tournament participants. Enabled by default." />
     <string id="BTA05" text="Troop Tier" />
     <string id="BTA06" text="Troop tier for armor worn by tournament participants. Default is 1." />
+    <string id="BTA07" text="Wear Armor of Own Culture" />
+    <string id="BTA08" text="Tournament participants wear armor of their own culture instead of the current settlement's culture. Disabled by default." />
   </strings>
 </base>

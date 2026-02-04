@@ -20,12 +20,14 @@ namespace BalancedTournamentArmor
         public override Equipment GetParticipantArmor(CharacterObject participant)
         {
             Equipment participantArmor = null;
+            BalancedTournamentArmorSettings settings = BalancedTournamentArmorSettings.Instance;
 
-            if (Mission.Current.Mode == MissionMode.Tournament && BalancedTournamentArmorSettings.Instance.ShouldChangeArmor)
+            if (Mission.Current.Mode == MissionMode.Tournament && settings.ShouldChangeArmor)
             {
-                // Get troop armors of the current settlement's culture.
-                List<Equipment> equipments = CharacterObject.FindAll(character => character.Culture == Settlement.CurrentSettlement.Culture && character.Tier == BalancedTournamentArmorSettings.Instance.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).Select(character => character?.RandomBattleEquipment).Where(equipment => equipment != null).OrderBy(equipment => GetTotalArmorSum(equipment)).ToList();
+                // Get armor sets that meet the required conditions.
+                List<Equipment> equipments = CharacterObject.FindAll(character => character.Culture == (settings.ShouldWearArmorOfOwnCulture ? participant.Culture : Settlement.CurrentSettlement.Culture) && character.Tier == settings.TroopTier && character.IsSoldier && !character.HiddenInEncyclopedia && !character.IsFemale && !character.StringId.Contains("tutorial") && !character.StringId.Contains("conspiracy") && !character.StringId.Contains("root")).Select(character => character?.RandomBattleEquipment).Where(equipment => equipment != null).OrderBy(equipment => GetTotalArmorSum(equipment)).ToList();
 
+                // Exclude armor sets with total armor greater than or equal to twice the lowest total armor.
                 equipments.RemoveAll(equipment => GetTotalArmorSum(equipment) >= GetTotalArmorSum(equipments.First()) * 2);
                 participantArmor = equipments.GetRandomElement();
 
